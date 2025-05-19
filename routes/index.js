@@ -22,6 +22,15 @@ router.get("/new", (req, res) => {
     res.render("new")
 });
 
+router.get("/message/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const messageContent = messages[id];
+  if (!messageContent) {
+    return res.status(404).send("Message not found");
+  }
+  res.render('message', {messageContent});
+})
+
 router.post('/new', (req, res) => {
   const { username, messageText } = req.body;
   messages.push({ user: username, text: messageText, added: new Date() });
